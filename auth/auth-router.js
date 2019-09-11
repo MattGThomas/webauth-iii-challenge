@@ -2,11 +2,11 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
-const People = require('../people/people-model')
+const People = require('../people/people-model.js')
 
 router.post('/register', (req, res) => {
     let person = req.body
-    const hash = bcrypt.hashSync(person.password, 10)
+    const hash = bcrypt.hashSync(person.password, 6)
     person.password = hash
 
     People.add(person)
@@ -18,7 +18,8 @@ router.post('/register', (req, res) => {
             })
         })
         .catch(err => {
-            res.status(500).json(error)
+            console.log(err)
+            res.status(500).json(err)
         })
 
 })
